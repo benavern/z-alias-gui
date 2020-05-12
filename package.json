@@ -1,0 +1,57 @@
+{
+  "name": "z-alias-gui",
+  "version": "0.1.0",
+  "main": "./src/electron.js",
+  "scripts": {
+    "dev": "run-p dev:svelte dev:electron",
+    "dev:svelte": "rollup -c -w",
+    "dev:electron": "NODE_ENV=development electron .",
+    "build": "npm run build:svelte && npm run build:electron",
+    "build:svelte": "rollup -c",
+    "build:electron": "DEBUG=electron-builder electron-builder --dir",
+    "dist": "npm run build:svelte && electron-builder"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "11.0.2",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "chokidar": "^3.4.0",
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.20.0",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "svelte": "^3.0.0"
+  },
+  "dependencies": {},
+  "build": {
+    "appId": "com.benavern.z-alias-gui",
+    "productName": "z-alias-gui",
+    "copyright": "Copyright © 2020 Benjamin Caradeuc <benjamin@caradeuc.info> (https://benjamin.caradeuc.info)",
+    "asar": true,
+    "linux": {
+      "category": "Utility"
+    },
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
+  },
+  "description": "Edit your bash aliases the easy way",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/benavern/z-alias-gui.git"
+  },
+  "keywords": [
+    "electron",
+    "svelte",
+    "cli",
+    "alias"
+  ],
+  "author": "Benjamin Caradeuc <benjamin@caradeuc.info> (https://benjamin.caradeuc.info)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benavern/z-alias-gui/issues"
+  },
+  "homepage": "https://github.com/benavern/z-alias-gui#readme"
+}
