@@ -1,37 +1,24 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path')
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-
 function createWindow() {
-  mainWindow = new BrowserWindow({
+  // Create the browser window.
+  const mainWindow = new BrowserWindow({
     width: 480,
     height: 650,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   // I don't need the application menu
   mainWindow.removeMenu()
 
-  let watcher;
-  if (process.env.NODE_ENV === 'development') {
-    // During development, reload page whenever the bundle changes
-    watcher = require('chokidar').watch(path.join(__dirname, '../public/'), { ignoreInitial: true });
-    watcher.on('change', () => {
-      mainWindow. reload();
-    });
+  // and load the index.html of the app.
+  mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
 
-    // also open dev tools
-    mainWindow.webContents.openDevTools()
-    mainWindow.setSize(1200, 650)
-  }
-
-  mainWindow.loadURL(`file://${path.join(__dirname, '../public/index.html')}`);
-  mainWindow.on('closed', () => {
-    if (watcher) watcher.close();
-    mainWindow = null;
-  });
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished
@@ -41,7 +28,7 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
+  // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
@@ -49,9 +36,18 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
+  // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
+
+// reload when the app changes
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
+  awaitWriteFinish: true,
 });
