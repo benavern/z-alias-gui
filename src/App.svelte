@@ -1,44 +1,29 @@
 <script>
-  import Home from "./routes/Home.svelte"
-  import Edit from "./routes/Edit.svelte"
-  import About from "./routes/About.svelte"
+  import { router, RouterView, Link } from './router'
 
-  let currentRoute = 'home'
+  let currentRoute
 
-  let routes = {
-    'home': { component: Home },
-    'create': { component: Edit, mode: 'create' },
-    'edit': { component: Edit, mode: 'edit' },
-    'about': { component: About }
-  }
-
-  function goto(route) {
-    console.log('Nav to', route)
-    currentRoute = route
-  }
+  router.subscribe(({current}) => {
+    currentRoute = current
+  })
 </script>
 
 {#if currentRoute !== 'home'}
   <nav>
-    <button on:click={() => goto('home')}>&larr; Home</button>
+    <Link to="home">&larr; Home</Link>
   </nav>
 {/if}
 
 <main class:has-header={currentRoute !== 'home'}>
   <div class="container">
-    {#if routes[currentRoute]}
-      <svelte:component this={routes[currentRoute].component} mode={routes[currentRoute].mode} on:goto={({ detail: path }) => goto(path)}/>
-    {:else}
-      <h1>You are lost.</h1>
-      <button on:click={() => goto('home')}>Back to Home</button>
-    {/if}
+    <RouterView />
   </div>
 </main>
 
 <footer>
   <div class="container">
-    <button on:click={() => goto('about')}>About</button>
-    <button on:click={() => goto('error')}>ERROR</button>
+    <Link to="about">About</Link>
+    <Link to="error">ERROR</Link>
   </div>
 </footer>
 
