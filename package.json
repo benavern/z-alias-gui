@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "run-p dev:svelte dev:electron",
     "dev:svelte": "rollup -c -w",
-    "dev:electron": "electron-forge start",
+    "dev:electron": "NODE_ENV=development electron-forge start",
     "build": "npm run build:svelte && npm run build:electron",
     "build:svelte": "rollup -c",
     "build:electron": "electron-forge make",
