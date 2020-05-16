@@ -49,7 +49,7 @@
   .alias {
     margin: 1rem 0;
     border-radius: .25rem;
-    box-shadow: 0 0 .25rem var(--gray);
+    box-shadow: 0 0 .25rem black;
     overflow: hidden;
 
     &__info {
@@ -68,8 +68,8 @@
 
       &__actions {
         display: flex;
-        flex-direction: column;
-        width: 4rem;
+        flex-direction: row;
+        width: 8rem;
         font-size: 1rem;
 
         > :global(*) {
@@ -84,7 +84,6 @@
 
           &:hover {
             cursor: pointer;
-            color: var(--white);
             background-color: var(--primary-transparent);
           }
         }
