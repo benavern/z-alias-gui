@@ -11,6 +11,6 @@
   }
 </script>
 
-<button on:click={onClick}>
+<button on:click={onClick} { ...$$restProps }>
   <slot></slot>
 </button>

@@ -1,15 +1,12 @@
 <script>
   import { Link } from '../router'
-  import { getAliases } from '../api'
-
-  let aliases = []
-  getAliases().then(list => { aliases = list })
-
+  import { aliases } from '../api'
+  import AliasItem from '../components/AliasItem.svelte'
 </script>
 
-<h1>Liste des alias</h1>
-
-<pre>{JSON.stringify(aliases, null, 2)}</pre>
-
-<Link to="create">Create</Link>
-<Link to="edit">edit</Link>
+{#each $aliases as alias}
+  <AliasItem {alias} />
+{:else}
+  <h1>No Aliases Found</h1>
+  <Link>Create</Link>
+{/each}

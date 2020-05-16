@@ -1,11 +1,14 @@
 <script>
   import { router, RouterView, Link } from './router'
+  import { fetchAliases } from './api'
 
   let currentRoute
 
   router.subscribe(({current}) => {
     currentRoute = current
   })
+
+  fetchAliases()
 </script>
 
 {#if currentRoute !== 'home'}
@@ -22,8 +25,10 @@
 
 <footer>
   <div class="container">
+    <Link to="create">Create</Link>
     <Link to="about">About</Link>
-    <Link to="error">ERROR</Link>
+    <Link to="error">Error</Link>
+    <button on:click={fetchAliases}>Reload</button>
   </div>
 </footer>
 
