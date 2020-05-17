@@ -2,21 +2,19 @@
   import { RouterView, Link } from './router'
   import { fetchAliases } from './api'
   import Icon from './components/Icon.svelte'
-
+  const { remote } = window.require('electron')
   // initial load
   fetchAliases()
+
+  function closeApp() {
+    remote.app.quit()
+  }
 </script>
 
-<header>
-  <div class="container">
-    <Link to="home" class="logo">
-      <img src="icon/iconx48.png" alt="z-alias">
-    </Link>
+<header class="drag">
+  <img src="icon/iconx48.png" alt="z-alias">
 
-    <button on:click={fetchAliases} class="btn">
-      <Icon name="reload" />
-    </button>
-  </div>
+  <button class="close btn btn-icon no-drag" on:click={closeApp}>&times;</button>
 </header>
 
 <main>
@@ -27,19 +25,32 @@
 
 <footer>
   <div class="container">
-    <Link to="create" class="btn">Create</Link>
+    <Link to="home" class="btn">
+      List
+    </Link>
+
+    <Link to="create" class="btn">
+      Create
+    </Link>
+
+    <button on:click={fetchAliases} class="btn">
+      <Icon name="reload" />
+    </button>
+
     <Link to="about" class="btn btn-link">About</Link>
   </div>
 </footer>
 
 <style lang="scss">
+  $header-height: 4rem;
+
   header,
   footer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 4rem;
+    height: $header-height;
     background-color: var(--black-transparent);
     backdrop-filter: blur(10px);
 
@@ -51,9 +62,18 @@
     }
   }
 
-  header :global(.logo) {
-    border: none;
-    background: none;
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .close {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      color: var(--white);
+      transform: translateY(-50%);
+    }
   }
 
   footer {
@@ -62,6 +82,6 @@
   }
 
   main {
-    padding: 4rem 0;
+    padding: $header-height 0;
   }
 </style>

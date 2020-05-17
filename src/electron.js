@@ -5,10 +5,17 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 480,
+    minWidth: 400,
+    maxWidth: 960,
     height: 650,
+    minHeight: 320,
+    maximizable: false,
     webPreferences: {
       nodeIntegration: true,
+      devTools: process.env.NODE_ENV === 'development'
     },
+    frame: false,
+    titleBarStyle: 'hiddenInset' // got to try that on mac ...
   });
 
   // I don't need the application menu

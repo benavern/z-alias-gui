@@ -36,4 +36,30 @@
       text-decoration: underline;
     }
   }
+
+  &.btn-icon {
+    border: none;
+    background-color: transparent;
+    margin: auto;
+    padding: 0;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1;
+    color: inherit;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--black-transparent);
+    }
+  }
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag
 }

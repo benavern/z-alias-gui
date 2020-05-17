@@ -28,15 +28,15 @@
     </div>
 
     <div class="alias__info__actions">
-      <button on:click={onCopy}>
+      <button on:click={onCopy} class="btn btn-icon">
         <Icon name="copy"/>
       </button>
 
-      <Link to="edit">
+      <Link to="edit" class="btn btn-icon">
         <Icon name="edit"/>
       </Link>
 
-      <button on:click={onDelete}>
+      <button on:click={onDelete} class="btn btn-icon">
         <Icon name="delete"/>
       </button>
     </div>
@@ -71,21 +71,6 @@
         flex-direction: row;
         width: 8rem;
         font-size: 1rem;
-
-        > :global(*) {
-          border: none;
-          background-color: transparent;
-          margin: auto;
-          width: 2.5rem;
-          height: 2.5rem;
-          border-radius: 50%;
-          text-align: center;
-
-          &:hover {
-            cursor: pointer;
-            background-color: var(--black-transparent);
-          }
-        }
       }
     }
 
