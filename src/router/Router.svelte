@@ -15,5 +15,5 @@
   <svelte:component this={routesList[currentRoute].component} mode={routesList[currentRoute].mode} />
 {:else}
   <h1>You are lost.</h1>
-  <Link to="home">Back to Home</Link>
+  <Link to="home" class="btn btn-outline">Back to Home</Link>
 {/if}

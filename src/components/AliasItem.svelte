@@ -49,7 +49,8 @@
   .alias {
     margin: 1rem 0;
     border-radius: .25rem;
-    box-shadow: 0 0 .25rem black;
+    box-shadow: 0 0 .25rem var(--gray);
+    background-color: var(--white);
     overflow: hidden;
 
     &__info {
@@ -62,7 +63,6 @@
 
         .desc {
           color: var(--gray);
-          margin-top: 1rem;
         }
       }
 
@@ -84,7 +84,7 @@
 
           &:hover {
             cursor: pointer;
-            background-color: var(--primary-transparent);
+            background-color: var(--black-transparent);
           }
         }
       }

@@ -7,6 +7,6 @@
 {#each $aliases as alias}
   <AliasItem {alias} />
 {:else}
-  <h1>No Aliases Found</h1>
-  <Link>Create</Link>
+  <h1>No Alias Found</h1>
+  <Link to="create" class="btn btn-outline">Create</Link>
 {/each}

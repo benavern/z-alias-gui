@@ -1,16 +1,9 @@
 <script>
-  import router from './router'
+  import { goto } from './router'
 
   export let to = ''
-
-  function onClick() {
-    router.update(store => ({
-      ...store,
-      current: to
-    }))
-  }
 </script>
 
-<button on:click={onClick} { ...$$restProps }>
+<button on:click={() => goto(to)} { ...$$restProps }>
   <slot></slot>
 </button>
