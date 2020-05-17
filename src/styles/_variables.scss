@@ -1,0 +1,14 @@
+$primary: #28a581;
+$white: #f0f0f1;
+
+:root {
+	--primary: #{$primary};
+  --white: #{$white};
+  --light: #{darken($white, 5%)};
+	--gray: #{darken($white, 40%)};
+	--dark: #{darken($white, 80%)};
+  --black: #{darken($white, 90%)};
+
+  --black-transparent: #{rgba(darken($white, 90%), 0.25)};
+  --primary-transparent: #{rgba($primary, 0.25)};
+}

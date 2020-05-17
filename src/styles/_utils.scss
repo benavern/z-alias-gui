@@ -1,0 +1,38 @@
+.container {
+  padding: 0 1em;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.btn {
+  color: var(--white);
+  padding: .25em 1em;
+  border: none;
+  background-color: var(--primary);
+  border-radius: .25em;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.btn-outline {
+    border: .1em solid var(--primary);
+    background-color: transparent;
+    color: var(--primary);
+
+    &:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+
+  &.btn-link {
+    border: none;
+    background-color: transparent;
+    color: var(--primary);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
