@@ -45,6 +45,19 @@ button {
   color: inherit;
 }
 
+pre {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  background-color: var(--dark);
+  color: var(--light);
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow: auto;
+  user-select: text;
+  border-radius: .25rem;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -58,9 +71,6 @@ button {
   border-radius: 4px;
 }
 
-pre {
-  user-select: text;
-}
 ::selection {
   background-color: var(--primary-transparent);
 }

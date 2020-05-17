@@ -1,7 +1,16 @@
+<script>
+  import { Link } from '../router'
+  import { aliasFile } from '../api'
+</script>
+
 <h1>Z Alias</h1>
 
-<p>Made by <a href="https://benjamin.caradeuc.info">Benjamin Caradeuc</a></p>
+<p>Made by <Link to="https://benjamin.caradeuc.info" class="btn btn-link">Benjamin Caradeuc</Link></p>
 
-<p>More info <a href="https://github.com/benavern/z-alias-gui#readme">on github</a></p>
+<p>More info <Link to="https://github.com/benavern/z-alias-gui#readme" class="btn btn-link">on github</Link></p>
 
-<p>Submit an issue <a href="https://github.com/benavern/z-alias-gui/issues">here</a></p>
+<p>Submit an issue <Link to="https://github.com/benavern/z-alias-gui/issues" class="btn btn-link">here</Link></p>
+
+<p> Don't forget to add this line to your <code>.bashrc</code> :</p>
+
+<pre><code>if [ -f {aliasFile} ]; then source {aliasFile}; fi</code></pre>

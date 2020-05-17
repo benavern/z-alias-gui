@@ -78,7 +78,6 @@
           margin: auto;
           width: 2.5rem;
           height: 2.5rem;
-          // line-height: 2.5rem;
           border-radius: 50%;
           text-align: center;
 
@@ -91,13 +90,15 @@
     }
 
     &__cmd {
-      display: block;
-      overflow: auto;
-      width: 100%;
-      background-color: var(--dark);
-      color: var(--primary);
-      padding: 1rem;
-      overflow: auto;
+      margin: 0;
+      border-radius: 0;
+
+      &:before{
+        content: '$';
+        color: var(--primary);
+        user-select: none;
+        margin-right: .5em;
+      }
     }
   }
 </style>

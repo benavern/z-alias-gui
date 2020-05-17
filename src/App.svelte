@@ -61,7 +61,6 @@
     bottom: 0;
   }
 
-
   main {
     padding: 4rem 0;
   }
