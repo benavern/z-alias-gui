@@ -14,7 +14,9 @@
 <header class="drag">
   <img src="icon/iconx48.png" alt="z-alias">
 
-  <button class="close btn btn-icon no-drag" on:click={closeApp}>&times;</button>
+  {#if process.platform !== 'darwin'}
+    <button class="close btn btn-icon no-drag" on:click={closeApp}>&times;</button>
+  {/if}
 </header>
 
 <main>
