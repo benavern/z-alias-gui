@@ -27,24 +27,26 @@
 
 <footer>
   <div class="container">
-    <Link to="home" class="btn">
-      List
+    <Link to="home" class="btn btn-icon">
+      <Icon name="list" />
     </Link>
 
-    <Link to="create" class="btn">
-      Create
+    <Link to="create" class="btn btn-icon">
+      <Icon name="add" />
     </Link>
 
-    <button on:click={fetchAliases} class="btn">
+    <button on:click={fetchAliases} class="btn btn-icon">
       <Icon name="reload" />
     </button>
 
-    <Link to="about" class="btn btn-link">About</Link>
+    <Link to="about" class="btn btn-icon">
+      <Icon name="info" />
+    </Link>
   </div>
 </footer>
 
 <style lang="scss">
-  $header-height: 4rem;
+  $header-height: 3rem;
 
   header,
   footer {
@@ -55,6 +57,7 @@
     height: $header-height;
     background-color: var(--black-transparent);
     backdrop-filter: blur(10px);
+    color: var(--white);
 
     .container {
       display: flex;
@@ -73,7 +76,6 @@
       position: absolute;
       top: 50%;
       right: 1rem;
-      color: var(--white);
       transform: translateY(-50%);
     }
   }
@@ -81,6 +83,10 @@
   footer {
     top: auto;
     bottom: 0;
+
+    :global(.active) {
+      color: var(--primary);
+    }
   }
 
   main {

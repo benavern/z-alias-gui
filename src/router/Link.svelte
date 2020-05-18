@@ -1,5 +1,5 @@
 <script>
-  import { goto } from './router'
+  import router, { goto } from './router'
   const { shell } = window.require('electron')
 
   export let to = ''
@@ -16,6 +16,6 @@
 
 </script>
 
-<button on:click={onClick} { ...$$restProps }>
+<button on:click={onClick} { ...$$restProps } class:active={ $router.current === to }>
   <slot></slot>
 </button>
