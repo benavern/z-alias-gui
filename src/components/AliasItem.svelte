@@ -17,8 +17,8 @@
 
 </script>
 
-<div class="alias">
-  <div class="alias__info">
+<div class="alias card">
+  <div class="alias__info card__section">
     <div class="alias__info__main">
       <h3 class="name">{alias.aliasName}</h3>
 
@@ -47,16 +47,11 @@
 
 <style lang="scss">
   .alias {
-    margin: 1rem 0;
-    border-radius: .25rem;
-    box-shadow: 0 0 .25rem var(--gray);
-    background-color: var(--white);
     overflow: hidden;
 
     &__info {
       display: flex;
       flex-direction: row;
-      padding: 1rem;
 
       &__main {
         flex: 1;

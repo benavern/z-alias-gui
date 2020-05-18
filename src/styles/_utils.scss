@@ -1,5 +1,5 @@
 .container {
-  padding: 0 1em;
+  padding: 0 1rem;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -62,4 +62,18 @@
 
 .no-drag {
   -webkit-app-region: no-drag
+}
+
+.card {
+  margin: 1rem 0;
+  border-radius: .25rem;
+  box-shadow: 0 0 .25rem var(--gray);
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+
+  &__section:not(:last-child) {
+    border-bottom: 1px solid var(--black-transparent);
+    padding: 1rem;
+  }
 }
