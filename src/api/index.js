@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store'
 const { remote, clipboard } = window.require('electron')
-const { aliasFile: filePath, parseAliasFile, removeFromFile, addToFile } = window.require('z-alias/lib/utils/aliases')
+const { aliasFile: filePath, parseAliasFile, removeFromFile, addToFile, replaceInFile } = window.require('z-alias/lib/utils/aliases')
 const { aliasCmdGuard, aliasNameGuard } = window.require('z-alias/lib/commands/guards')
 
 /**
@@ -82,7 +82,7 @@ export async function createAlias(alias) {
       icon: 'icon/iconx48.png'
     })
 
-    return
+    return { success: false }
   }
 
   if (cmdError) {
@@ -91,7 +91,7 @@ export async function createAlias(alias) {
       icon: 'icon/iconx48.png'
     })
 
-    return
+    return { success: false }
   }
 
   // add the alias
@@ -105,6 +105,50 @@ export async function createAlias(alias) {
 
   // refresh aliases list
   await fetchAliases()
+
+  return { success: true }
+}
+
+/**
+ * Replaces an alias in the file
+ *
+ * @param {Alias} alias - the new alias to add
+ */
+export async function replaceAlias(alias) {
+  const nameError = aliasNameError(alias.aliasName)
+  const cmdError = aliasCmdError(alias.aliasCmd)
+
+  if (nameError) {
+    new Notification('z-alias', {
+      body: nameError,
+      icon: 'icon/iconx48.png'
+    })
+
+    return { success: false }
+  }
+
+  if (cmdError) {
+    new Notification('z-alias', {
+      body: cmdError,
+      icon: 'icon/iconx48.png'
+    })
+
+    return { success: false }
+  }
+
+  // replace the alias
+  await replaceInFile(alias)
+
+  // tell the user it's done
+  new Notification('z-alias', {
+    body: 'The alias has been editted.',
+    icon: 'icon/iconx48.png'
+  })
+
+  // refresh aliases list
+  await fetchAliases()
+
+  return { success: true }
 }
 
 /**

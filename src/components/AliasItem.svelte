@@ -32,7 +32,7 @@
         <Icon name="copy"/>
       </button>
 
-      <Link to="edit" class="btn btn-icon">
+      <Link to="edit" class="btn btn-icon" meta={{ alias }}>
         <Icon name="edit"/>
       </Link>
 

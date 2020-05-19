@@ -3,6 +3,7 @@
   const { shell } = window.require('electron')
 
   export let to = ''
+  export let meta = null
 
   $: external = to.startsWith('http')
 
@@ -10,7 +11,7 @@
     if (external) {
       shell.openExternal(to)
     } else {
-      goto(to)
+      goto(to, meta)
     }
   }
 

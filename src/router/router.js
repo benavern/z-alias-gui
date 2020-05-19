@@ -19,11 +19,17 @@ const router = writable({
  *
  * @param {string} to - the name of the target route
  */
-export function goto (to = '') {
-  router.update(store => ({
-    ...store,
-    current: to
-  }))
+export function goto (to = '', meta) {
+  router.update(({ routes }) => {
+    if (routes[to]) {
+      routes[to].meta = meta
+    }
+
+    return {
+      current: to,
+      routes
+    }
+  })
 }
 
 export default router

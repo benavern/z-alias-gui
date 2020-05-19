@@ -1,50 +1,64 @@
 <script>
-  import { createAlias } from '../api'
+  import { afterUpdate } from 'svelte'
+  import { createAlias, replaceAlias } from '../api'
+  import { goto } from '../router/router.js'
 
-  export let mode = 'edit'
+  export let mode = 'create'
 
-
-  let alias = {
-    aliasName: '',
-    aliasCmd: '',
-    aliasDesc: ''
-  }
+  export let alias
 
   async function onSubmit() {
-    const res = await createAlias(alias)
+    let res
+    if (mode === 'edit') {
+      res = await replaceAlias(alias)
+    } else {
+      res = await createAlias(alias)
+    }
 
     if (res.success) {
+      goto('home')
+    }
+  }
+
+  afterUpdate(() => {
+    if (!alias) {
       alias = {
         aliasName: '',
         aliasCmd: '',
         aliasDesc: ''
       }
     }
-  }
+	});
 </script>
 
 <h1>{mode} alias</h1>
 
-<div class="card">
-  <form on:submit|preventDefault={onSubmit}>
-    <div class="card__section">
-      <label for="name">Name</label>
-      <input type="text" placeholder="ls" id="name" bind:value={alias.aliasName}>
+{#if alias}
+  <div class="card">
+    <form on:submit|preventDefault={onSubmit}>
+      <div class="card__section">
+        <label for="name">name</label>
+        <input type="text" placeholder="ls" id="name" bind:value={alias.aliasName} required readonly={mode === 'edit'}>
 
-      <label for="desc">Description</label>
-      <input type="text" placeholder="ls -lAh" id="cmd" bind:value={alias.aliasCmd}>
+        <label for="cmd">command</label>
+        <input type="text" placeholder="ls -lAh" id="cmd" bind:value={alias.aliasCmd} required>
 
-      <label for="desc">Name</label>
-      <input type="text" placeholder="Display directory content" id="desc" bind:value={alias.aliasDesc}>
+        <label for="desc">description</label>
+        <input type="text" placeholder="Display directory content" id="desc" bind:value={alias.aliasDesc}>
 
-      <p>
-        <button class="btn" disabled={!alias.aliasName || !alias.aliasCmd}>Create</button>
-      </p>
-    </div>
-  </form>
-</div>
+        <button class="btn submit" disabled={!alias.aliasName || !alias.aliasCmd}>{mode.toUpperCase()}</button>
+      </div>
+    </form>
+  </div>
+{/if}
 
-<style>
+<style lang="scss">
+  label {
+    display: block;
+    font-variant: small-caps;
+    color: var(--gray);
+  }
+
   input {
     font-family: inherit;
     font-size: inherit;
@@ -56,5 +70,14 @@
     border-radius: .25rem;
     color: dark;
     padding: .5rem 1rem;
+
+    &[readonly] {
+      color: var(--gray);
+    }
+  }
+
+  .submit {
+    display: block;
+    width: 100%;
   }
 </style>
