@@ -1,6 +1,7 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 const { remote, clipboard } = window.require('electron')
-const { aliasFile: filePath, parseAliasFile, removeFromFile } = window.require('z-alias/lib/utils/aliases')
+const { aliasFile: filePath, parseAliasFile, removeFromFile, addToFile } = window.require('z-alias/lib/utils/aliases')
+const { aliasCmdGuard, aliasNameGuard } = window.require('z-alias/lib/commands/guards')
 
 /**
  * @typedef {{aliasName: string, aliasDesc: string, aliasCmd: string}} Alias - an alias object from z-alias lib
@@ -11,6 +12,34 @@ export const aliasFile = filePath
 
 // the renderer store aliases list
 export const aliases = writable([])
+
+/**
+ * get errors for aliasName
+ *
+ * @param {string} aliasName - the alias to valisate
+ *
+ * @returns {string|null}
+ */
+export function aliasNameError(aliasName) {
+  const check = aliasNameGuard(get(aliases))(aliasName)
+
+  if (check === true) return null
+  return check
+}
+
+/**
+ * get errors for aliasCmd
+ *
+ * @param {string} aliasCmd - the alias to valisate
+ *
+ * @returns {string|null}
+ */
+export function aliasCmdError(aliasCmd) {
+  const check = aliasCmdGuard(aliasCmd)
+
+  if(check === true) return null
+  return check
+}
 
 /**
  * Get the list of stored aliases
@@ -36,6 +65,46 @@ export async function fetchAliases(notify = false) {
   }
 
   return res
+}
+
+/**
+ * Add an alias to the file
+ *
+ * @param {Alias} alias - the new alias to add
+ */
+export async function createAlias(alias) {
+  const nameError = aliasNameError(alias.aliasName)
+  const cmdError = aliasCmdError(alias.aliasCmd)
+
+  if (nameError) {
+    new Notification('z-alias', {
+      body: nameError,
+      icon: 'icon/iconx48.png'
+    })
+
+    return
+  }
+
+  if (cmdError) {
+    new Notification('z-alias', {
+      body: cmdError,
+      icon: 'icon/iconx48.png'
+    })
+
+    return
+  }
+
+  // add the alias
+  await addToFile(alias)
+
+  // tell the user it's done
+  new Notification('z-alias', {
+    body: 'The alias has been added.',
+    icon: 'icon/iconx48.png'
+  })
+
+  // refresh aliases list
+  await fetchAliases()
 }
 
 /**

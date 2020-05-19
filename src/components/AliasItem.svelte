@@ -47,8 +47,6 @@
 
 <style lang="scss">
   .alias {
-    overflow: hidden;
-
     &__info {
       display: flex;
       flex-direction: row;
@@ -70,9 +68,6 @@
     }
 
     &__cmd {
-      margin: 0;
-      border-radius: 0;
-
       &:before{
         content: '$';
         color: var(--primary);

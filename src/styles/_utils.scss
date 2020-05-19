@@ -15,6 +15,11 @@
     cursor: pointer;
   }
 
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
   &.btn-outline {
     border: .1em solid var(--primary);
     background-color: transparent;
@@ -71,9 +76,18 @@
   background-color: var(--white);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
-  &__section:not(:last-child) {
-    border-bottom: 1px solid var(--black-transparent);
+  &__section {
     padding: 1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--black-transparent);
+    }
+  }
+
+  > pre {
+    margin: 0;
+    border-radius: 0;
   }
 }
