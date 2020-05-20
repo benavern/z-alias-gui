@@ -4,11 +4,16 @@
 
 Why easy ? Well, it's a GUI ...
 
+![Screenshot](/screenshot.png)
+
 ## About
 
-This project provides an easy solution for using **aliases** from your command line. `z-alias` solves the hassle of remembering how to create / edit / delete your aliases.
+This project provides an easy solution for using **aliases** from your command line. `z-alias-gui` solves the hassle of remembering how to create / edit / delete your aliases. You'll be able to do it on a simple GUI.
 
-It uses the [z-alias](https://github.com/benavern/z-alias) package.
+## Dependances
+
+* [z-alias](https://github.com/benavern/z-alias) : manipulates the aliases file
+* [Electron](https://www.electronjs.org/) : creates desktop app with js
 
 ## Config
 
@@ -22,12 +27,12 @@ default: `~/.bash_aliases`
 
 ```
 # Change aliases file path
-export Z_ALIAS_FILE="/path/to/aliases"
+export Z_ALIAS_FILE=/path/to/aliases
 ```
 
 ### Make your aliases available on all shells
 
-You can make your aliases available on the shell you use
+You can make your aliases available on the shell you currently use by pasting this line just after you've used the app.
 
 ```
 # Make aliases available
@@ -48,14 +53,14 @@ npm i
 npm run dev
 ```
 
-### Build for your platform (test purpose)
+### Package for your platform (test purpose)
+
+```bash
+npm run package
+```
+
+### Build for your platform (distribution purpose)
 
 ```bash
 npm run build
-```
-
-### Build for distribution
-
-```bash
-npm run dist
 ```
