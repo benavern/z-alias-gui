@@ -4,10 +4,13 @@ const { aliasFile: filePath, parseAliasFile, removeFromFile, addToFile, replaceI
 const { aliasCmdGuard, aliasNameGuard } = window.require('z-alias/lib/commands/guards')
 
 /**
- * @typedef {{aliasName: string, aliasDesc: string, aliasCmd: string}} Alias - an alias object from z-alias lib
+ * @typedef {{ aliasName: string, aliasDesc: string, aliasCmd: string }} Alias - an alias object from z-alias lib
+ *
+ * @typedef {{ success: boolean, errors: { name: string|null, cmd: string|null } }} AliasValidation - the validation object for an alias
  */
 
 // the path to the file where the aliases are stored
+// @type string
 export const aliasFile = filePath
 
 // the renderer store aliases list
@@ -16,7 +19,7 @@ export const aliases = writable([])
 /**
  * get errors for aliasName
  *
- * @param {string} aliasName - the alias to valisate
+ * @param {string} aliasName - the alias name to valisate
  *
  * @returns {string|null}
  */
@@ -30,24 +33,43 @@ export function aliasNameError(aliasName) {
 /**
  * get errors for aliasCmd
  *
- * @param {string} aliasCmd - the alias to valisate
+ * @param {string} aliasCmd - the alias command to valisate
  *
  * @returns {string|null}
  */
 export function aliasCmdError(aliasCmd) {
   const check = aliasCmdGuard(aliasCmd)
 
-  if(check === true) return null
+  if (check === true) return null
   return check
+}
+
+/**
+ * Validate an alias and get the errors
+ *
+ * @param {Alias} alias - the alias to be validated
+ *
+ * @returns {AliasValidation} - the validation result with potential errors
+ */
+export function validateAlias(alias) {
+  const nameErr = aliasNameError(alias.aliasName)
+  const cmdErr = aliasCmdError(alias.aliasCmd)
+
+  return {
+    success: !nameErr && !cmdErr,
+    errors: {
+      name: nameErr,
+      cmd: cmdErr
+    }
+  }
 }
 
 /**
  * Get the list of stored aliases
  *
- * @param {Boolean} notify - whether to display a notification on success
- * @default(notify): false
+ * @param {Boolean} [notify=false] - whether to display a notification on success
  *
- * @returns {alias[]} - The array of aliases
+ * @returns {Promise<Alias[]>} - The array of aliases
  */
 export async function fetchAliases(notify = false) {
   // get the aliases list
@@ -70,29 +92,15 @@ export async function fetchAliases(notify = false) {
 /**
  * Add an alias to the file
  *
- * @param {Alias} alias - the new alias to add
+ * @param {Alias} alias - the alias to added
+ *
+ * @returns {Promise<AliasValidation>}
  */
 export async function createAlias(alias) {
-  const nameError = aliasNameError(alias.aliasName)
-  const cmdError = aliasCmdError(alias.aliasCmd)
+  const res = validateAlias(alias)
 
-  if (nameError) {
-    new Notification('z-alias', {
-      body: nameError,
-      icon: 'icon/iconx48.png'
-    })
-
-    return { success: false }
-  }
-
-  if (cmdError) {
-    new Notification('z-alias', {
-      body: cmdError,
-      icon: 'icon/iconx48.png'
-    })
-
-    return { success: false }
-  }
+  // if there are errors stop execution and provide info
+  if (!res.success) return res
 
   // add the alias
   await addToFile(alias)
@@ -106,35 +114,21 @@ export async function createAlias(alias) {
   // refresh aliases list
   await fetchAliases()
 
-  return { success: true }
+  return res
 }
 
 /**
  * Replaces an alias in the file
  *
- * @param {Alias} alias - the new alias to add
+ * @param {Alias} alias - the alias to be replaced
+ *
+ * @returns {Promise<AliasValidation>}
  */
 export async function replaceAlias(alias) {
-  const nameError = aliasNameError(alias.aliasName)
-  const cmdError = aliasCmdError(alias.aliasCmd)
+  const res = validateAlias(alias)
 
-  if (nameError) {
-    new Notification('z-alias', {
-      body: nameError,
-      icon: 'icon/iconx48.png'
-    })
-
-    return { success: false }
-  }
-
-  if (cmdError) {
-    new Notification('z-alias', {
-      body: cmdError,
-      icon: 'icon/iconx48.png'
-    })
-
-    return { success: false }
-  }
+  // if there are errors stop execution and provide info
+  if (!res.success) return res
 
   // replace the alias
   await replaceInFile(alias)
@@ -148,13 +142,15 @@ export async function replaceAlias(alias) {
   // refresh aliases list
   await fetchAliases()
 
-  return { success: true }
+  return res
 }
 
 /**
  *  Delete an alias from the file
  *
  * @param {Alias} alias - the alias to be deleted
+ *
+ * @returns {Promise<void>}
  */
 export async function deleteAlias(alias) {
   // ask for confirmation
@@ -186,6 +182,8 @@ export async function deleteAlias(alias) {
  * Copy the alias name in clipboard
  *
  * @param {Alias} alias - the alias to be copied
+ *
+ * @returns {void}
  */
 export function copyAlias(alias) {
   // write to the clipboard
