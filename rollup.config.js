@@ -19,7 +19,9 @@ export default {
 		svelte({
       // preprocess svelte files with scss syntax
       preprocess: [
-        svelteScss({})
+        svelteScss({
+          data: '@import "src/styles/_variables.scss";'
+        })
       ],
 			// enable run-time checks when not in production
 			dev: !production,

@@ -121,7 +121,7 @@
     background-color: var(--light);
     border: 1px solid var(--gray);
     border-radius: .25rem;
-    color: dark;
+    color: var(--dark);
     padding: .5rem 1rem;
 
     &[readonly] {

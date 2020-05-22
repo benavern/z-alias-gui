@@ -5,6 +5,7 @@
 Why easy ? Well, it's a GUI ...
 
 ![Screenshot](/screenshot.png)
+![Screenshot Dark](/screenshot-dark.png)
 
 ## About
 

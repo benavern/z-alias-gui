@@ -1,6 +1,7 @@
 <script>
   import { RouterView, Link } from './router'
   import { fetchAliases } from './api'
+  import { toggleTheme } from './theme'
   import Icon from './components/Icon.svelte'
   const { remote } = window.require('electron')
   // initial load
@@ -14,9 +15,15 @@
 <header class="drag">
   <img src="icon/iconx48.png" alt="z-alias">
 
-  {#if process.platform !== 'darwin'}
-    <button class="close btn btn-icon no-drag" on:click={closeApp}>&times;</button>
-  {/if}
+  <div class="actions">
+    <button class="btn btn-icon no-drag" on:click={toggleTheme}>
+      <Icon name="theme"/>
+    </button>
+
+    {#if process.platform !== 'darwin'}
+      <button class="btn btn-icon no-drag" on:click={closeApp}>&times;</button>
+    {/if}
+  </div>
 </header>
 
 <main>
@@ -57,7 +64,7 @@
     height: $header-height;
     background-color: var(--black-transparent);
     backdrop-filter: blur(10px);
-    color: var(--white);
+    color: $white;
 
     .container {
       display: flex;
@@ -72,10 +79,10 @@
     align-items: center;
     justify-content: center;
 
-    .close {
+    .actions {
       position: absolute;
       top: 50%;
-      right: 1rem;
+      right: .25rem;
       transform: translateY(-50%);
     }
   }

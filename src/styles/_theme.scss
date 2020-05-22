@@ -1,0 +1,27 @@
+:root {
+  --primary: #{$primary};
+  --primary-dark: #{darken($primary, 10%)};
+
+  --danger: #{$danger};
+
+  --white: #{$white};
+  --light: #{darken($white, 5%)};
+	--gray: #{darken($white, 40%)};
+	--dark: #{$dark};
+  --black: #{$black};
+
+  --black-transparent: #{rgba($black, 0.25)};
+  --primary-transparent: #{rgba($primary, 0.25)};
+}
+
+.dark-theme {
+  --primary-dark: #{lighten($primary, 10%)};
+
+  --white: #{$black};
+  --light: #{lighten($black, 5%)};
+	--gray: #{lighten($black, 40%)};
+	--dark: #{lighten($black, 75%)};
+  --black: #{$white};
+
+  --black-transparent: #{rgba($white, 0.25)};
+}

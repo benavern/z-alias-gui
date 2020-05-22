@@ -1,18 +1,5 @@
 $primary: #28a581;
 $danger: #a33e5c;
 $white: #f0f0f1;
-
-:root {
-  --primary: #{$primary};
-  --danger: #{$danger};
-
-  --primary-dark: #{darken($primary, 10%)};
-  --white: #{$white};
-  --light: #{darken($white, 5%)};
-	--gray: #{darken($white, 40%)};
-	--dark: #{darken($white, 80%)};
-  --black: #{darken($white, 90%)};
-
-  --black-transparent: #{rgba(darken($white, 90%), 0.25)};
-  --primary-transparent: #{rgba($primary, 0.25)};
-}
+$black: darken($white, 90%);
+$dark: darken($white, 75%);
