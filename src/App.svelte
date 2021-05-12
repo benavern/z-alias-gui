@@ -21,7 +21,9 @@
     </button>
 
     {#if process.platform !== 'darwin'}
-      <button class="btn btn-icon no-drag" on:click={closeApp}>&times;</button>
+      <button class="btn btn-icon no-drag" on:click={closeApp}>
+        <Icon name="close" />
+      </button>
     {/if}
   </div>
 </header>
