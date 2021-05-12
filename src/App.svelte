@@ -3,7 +3,7 @@
   import { fetchAliases } from './api'
   import { toggleTheme } from './theme'
   import Icon from './components/Icon.svelte'
-  const { remote } = window.require('electron')
+  const remote = require('@electron/remote')
   // initial load
   fetchAliases()
 
@@ -67,13 +67,6 @@
     background-color: var(--black-transparent);
     backdrop-filter: blur(10px);
     color: $white;
-
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 100%;
-    }
   }
 
   header {
@@ -92,6 +85,13 @@
   footer {
     top: auto;
     bottom: 0;
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
 
     :global(.active) {
       color: var(--primary);

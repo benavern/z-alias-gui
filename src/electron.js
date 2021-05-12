@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path')
+require('@electron/remote/main').initialize()
 
 function createWindow() {
   // Create the browser window.
@@ -12,6 +13,8 @@ function createWindow() {
     maximizable: false,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
       devTools: process.env.NODE_ENV === 'development'
     },
     frame: false,

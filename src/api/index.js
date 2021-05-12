@@ -1,5 +1,6 @@
 import { writable, get } from 'svelte/store'
-const { remote, clipboard } = window.require('electron')
+const { clipboard } = require('electron')
+const remote = require('@electron/remote')
 const { aliasFile: filePath, parseAliasFile, removeFromFile, addToFile, replaceInFile } = window.require('z-alias/lib/utils/aliases')
 const { aliasCmdGuard, aliasNameGuard } = window.require('z-alias/lib/commands/guards')
 

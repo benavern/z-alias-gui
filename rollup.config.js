@@ -3,7 +3,9 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import scss from 'rollup-plugin-scss'
-import { scss as svelteScss } from 'svelte-preprocess'
+import sveltePreprocess from 'svelte-preprocess'
+import css from 'rollup-plugin-css-only';
+
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -17,20 +19,22 @@ export default {
 	},
 	plugins: [
 		svelte({
-      // preprocess svelte files with scss syntax
-      preprocess: [
-        svelteScss({
-          data: '@import "src/styles/_variables.scss";'
-        })
-      ],
-			// enable run-time checks when not in production
-			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file - better for performance
-			css: css => {
-				css.write('public/build/bundle.css')
-			}
+      include: 'src/**/*.svelte',
+      preprocess: sveltePreprocess({
+        scss: {
+          prependData: '@import "src/styles/_variables.scss";'
+        }
+      }),
+      compilerOptions: {
+        // enable run-time checks when not in production
+        dev: !production,
+      }
 		}),
+
+
+    // we'll extract any component CSS out into
+    // a separate file - better for performance
+    css({ output: 'bundle.css' }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -41,10 +45,10 @@ export default {
 			browser: true,
 			dedupe: ['svelte']
 		}),
+
     commonjs(),
-    scss({
-      output: 'public/build/global.css'
-    }),
+
+    scss({ output: 'public/build/global.css' }),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
