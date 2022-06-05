@@ -5,7 +5,7 @@ import { terser } from 'rollup-plugin-terser'
 import scss from 'rollup-plugin-scss'
 import sveltePreprocess from 'svelte-preprocess'
 import css from 'rollup-plugin-css-only';
-
+import sass from 'sass';
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -48,7 +48,7 @@ export default {
 
     commonjs(),
 
-    scss({ output: 'public/build/global.css' }),
+    scss({ sass, output: 'public/build/global.css' }),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
